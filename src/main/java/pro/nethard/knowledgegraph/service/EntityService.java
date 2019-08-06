@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface EntityService {
     List<Entity> getEntityList(String domain, List<Long> originIdList) throws SQLException;
+
+    void addEntity(Entity entity) throws SQLException;
 }

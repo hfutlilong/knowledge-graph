@@ -3,7 +3,7 @@ package pro.nethard.knowledgegraph.service.impl;
 import com.alibaba.druid.pool.DruidPooledConnection;
 import org.springframework.stereotype.Service;
 import pro.nethard.knowledgegraph.dao.EntityDao;
-import pro.nethard.knowledgegraph.dao.connect.DruidConnPool;
+import pro.nethard.knowledgegraph.neo4j.DruidConnPool;
 import pro.nethard.knowledgegraph.entity.Entity;
 import pro.nethard.knowledgegraph.service.EntityService;
 
@@ -18,5 +18,11 @@ public class EntityServiceImpl implements EntityService {
         List<Entity> entityList = null;
         entityList = EntityDao.getInstance().queryEntityList(conn, domain, originIdList);
         return entityList;
+    }
+
+    @Override
+    public void addEntity(Entity entity) throws SQLException {
+        DruidPooledConnection conn = DruidConnPool.getInstance().getConnection();
+        EntityDao.getInstance().addEntity(conn, entity);
     }
 }

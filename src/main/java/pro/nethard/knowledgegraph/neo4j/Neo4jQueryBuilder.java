@@ -1,4 +1,4 @@
-package pro.nethard.knowledgegraph.cql;
+package pro.nethard.knowledgegraph.neo4j;
 
 import com.alibaba.druid.util.StringUtils;
 import pro.nethard.knowledgegraph.dao.Relation;

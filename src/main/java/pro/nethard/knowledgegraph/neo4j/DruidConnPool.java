@@ -1,4 +1,4 @@
-package pro.nethard.knowledgegraph.dao.connect;
+package pro.nethard.knowledgegraph.neo4j;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
