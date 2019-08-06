@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -10,32 +10,67 @@
 	</parent>
 	<groupId>pro.nethard</groupId>
 	<artifactId>knowledge-graph</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>knowledge-graph</name>
 	<description>knowledge graph use neo4j</description>
 	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<start-class>pro.nethard.knowledgegraph.KnowledgeGraphApplication</start-class>
 	</properties>
 
 	<dependencies>
-		<!-- Spring框架 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-aop</artifactId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-jar-plugin</artifactId>
+			<version>3.1.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.codehaus.plexus</groupId>
+					<artifactId>plexus-utils</artifactId>
+				</exclusion>
+				<exclusion>
+					<artifactId>plexus-component-annotations</artifactId>
+					<groupId>org.codehaus.plexus</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>plexus-interpolation</artifactId>
+					<groupId>org.codehaus.plexus</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-io</artifactId>
+					<groupId>commons-io</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>maven-shared-utils</artifactId>
+					<groupId>org.apache.maven.shared</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>wagon-provider-api</artifactId>
+					<groupId>org.apache.maven.wagon</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- neo4j -->
@@ -71,90 +106,148 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.9</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-collections4</artifactId>
+			<version>4.4</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>
 		<repository>
-			<id>netease-release</id>
-			<name>netease-releases</name>
-			<url>http://mvn.hz.netease.com/artifactory/libs-releases</url>
+			<id>netease_repo</id>
+			<url>http://mvn.hz.netease.com/artifactory/repo</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
 		</repository>
 		<repository>
+			<id>netease_release</id>
+			<name>netease_release</name>
+			<url>http://mvn.hz.netease.com/artifactory/libs-releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>snapshots</id>
+			<url>http://mvn.hz.netease.com/artifactory/libs-snapshots</url>
 			<snapshots>
 				<updatePolicy>always</updatePolicy>
 			</snapshots>
-			<id>snapshot</id>
-			<name>netease-snapshot</name>
-			<url>http://mvn.hz.netease.com/artifactory/libs-snapshots</url>
-		</repository>
-		<repository>
-			<id>central</id>
-			<url>http://repo1.maven.org/maven2</url>
-		</repository>
-		<repository>
-			<id>spring</id>
-			<url>http://maven.springframework.org/release</url>
 		</repository>
 	</repositories>
 
+	<distributionManagement>
+		<repository>
+			<id>repo</id>
+			<name>Netease Maven Repository</name>
+			<url>http://mvn.hz.netease.com/artifactory/libs-releases</url>
+		</repository>
+
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>Netease Maven Repository</name>
+			<url>http://mvn.hz.netease.com/artifactory/libs-snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
+
 	<build>
-		<finalName>knowledge-graph</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-					<encoding>${project.build.sourceEncoding}</encoding>
-				</configuration>
-			</plugin>
+		<finalName>springboot-demo</finalName>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.1</version>
-				<configuration>
-					<skipTests>true</skipTests>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<configuration>
-					<encoding>${project.build.sourceEncoding}</encoding>
-					<useDefaultDelimiters>true</useDefaultDelimiters>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>${start-class}</mainClass>
-							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
-						</manifest>
-						<manifestEntries>
-							<Class-Path>./</Class-Path>
-						</manifestEntries>
-					</archive>
-					<excludes>
-						<exclude>conf/**</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
+		<filters> <!-- 指定使用的 filter -->
+			<filter>src/main/resources/application.properties</filter>
+			<filter>src/main/resources/application.yml</filter>
+		</filters>
 		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
 
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.22.1</version>
+					<configuration>
+						<skipTests>true</skipTests>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<useDefaultDelimiters>true</useDefaultDelimiters>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<configuration>
+						<archive>
+							<manifest>
+								<mainClass>pro.nethard.knowledgegraph.KnowledgeGraphApplication</mainClass>
+								<addClasspath>true</addClasspath>
+							</manifest>
+							<manifestEntries>
+								<Class-Path>./</Class-Path>
+							</manifestEntries>
+						</archive>
+						<excludes>
+							<exclude>conf/**</exclude>
+						</excludes>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.0.0</version>
+					<configuration>
+						<descriptors>
+							<descriptor>../maven-assembly.xml</descriptor>
+						</descriptors>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>single</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<configuration>
+						<includeSystemScope>true</includeSystemScope>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
 </project>
